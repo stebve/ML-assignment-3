@@ -66,7 +66,7 @@ class ElmanCell(layers.Layer):
     def build(self, input_shape):
         d = input_shape[-1]
         self.W = self.add_weight(shape=(d, self.units), initializer="glorot_uniform", name="W", regularizer=_l2(self.l2))
-        self.U = self.add_weight(shape=(self.units, self.units), initializer="orthogonal", name="U", regularizer=_l2(self.l2))
+        self.U = self.add_weight(shape=(self.units, self.units), initializer="glorot_uniform", name="U", regularizer=_l2(self.l2))
         self.b = self.add_weight(shape=(self.units,), initializer="zeros", name="b")
         self.V = self.add_weight(shape=(self.units, 1), initializer="glorot_uniform", name="V", regularizer=_l2(self.l2))
 
