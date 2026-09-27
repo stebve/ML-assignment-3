@@ -28,13 +28,13 @@ class RNN(BaseEstimator, RegressorMixin):
     Makes a Keras RNN behave like a scikit-learn model.
     """
 
-    def __init__(self, arch="elman", lags=12, units=8, lr=0.01, epochs=300, n_banks=4, l2=0.0, seed=0):
+    def __init__(self, arch="elman", lags=12, units=8, lr=0.01, epochs=300, l2=0.0, seed=0):
         self.arch, self.lags, self.units, self.lr = arch, lags, units, lr
-        self.epochs, self.n_banks, self.seed, self.l2 = epochs, n_banks, seed, l2
+        self.epochs, self.seed, self.l2 = epochs, seed, l2
 
     def _prep(self, X):
         X = np.asarray(X, dtype="float32")[:, -self.lags:]      # keep only the last `lags` values
-        return ((X - self.mu_) / self.sd_)[..., None]           # scale, add a feature axis -> (n, lags, 1)
+        return ((X - self.mu_) / self.sd_)                      # scale
 
     def fit(self, X, y):
         keras.utils.set_random_seed(self.seed)
@@ -43,7 +43,7 @@ class RNN(BaseEstimator, RegressorMixin):
         # scaling from the TRAINING fold only
         self.mu_, self.sd_ = y.mean(), y.std()
 
-        self.model_ = build_model(self.arch, self.lags, self.units, self.lr, self.n_banks, self.l2)
+        self.model_ = build_model(self.arch, self.lags, self.units, self.lr, self.l2)
         self.model_.fit(self._prep(X), (y - self.mu_) / self.sd_, epochs=self.epochs, batch_size=len(y), verbose=0)
         return self
 
@@ -139,12 +139,12 @@ class MRNNCell(layers.Layer):
         return {**super().get_config(), "units": self.units, "l2": self.l2}
 
 
-def build_model(arch, lags, units, lr=1e-2, n_banks=4, l2=0.0):
+def build_model(arch, lags, units, lr=1e-2, l2=0.0):
     """
     arch: 'elman' | 'jordan' | 'mrnn'. l2: L2 weight penalty (0 = off).
     Returns a compiled Keras model.
 
-    With l2 > 0 the reported `loss` (and `val_loss`) includes the penalty, so
+    With l2 > 0 the reported `loss` (and `va_loss`) includes the penalty, so
     the model also tracks plain `mse` for comparing prediction error.
     """
 
@@ -168,4 +168,4 @@ def make_windows(series, lags):
     s = np.asarray(series, dtype="float32")
     X = np.stack([s[i:i + lags] for i in range(len(s) - lags)])[..., None]
     y = s[lags:, None]
-    return X, y
+    return X, y.ravel()

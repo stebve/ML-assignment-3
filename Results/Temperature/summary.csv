@@ -1,0 +1,4 @@
+,Mean CV RMSE,Std across seeds,Best seed,Worst seed
+elman,2.13,0.04,2.09,2.18
+jordan,2.36,0.02,2.32,2.38
+mrnn,2.18,0.03,2.13,2.22

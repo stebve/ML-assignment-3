@@ -1,0 +1,4 @@
+,Mean CV RMSE,Std across seeds,Best seed,Worst seed
+elman,0.0,0.0,0.0,0.01
+jordan,0.0,0.0,0.0,0.01
+mrnn,0.0,0.0,0.0,0.0
