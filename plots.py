@@ -28,15 +28,15 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-ARCH_COLORS = {"elman": "#2a78d6", "jordan": "#eb6834", "mrnn": "#1baf7a"}   # colourblind-checked order
+ARCH_COLORS = {"elman": "#2a78d6", "jordan": "#eb6834", "mrnn": "#1baf7a"}
 NEUTRAL_COLOR = "#8a8984"
 INK, INK_MUTED, GRID = "#0b0b0b", "#52514e", "#e4e3df"
 
-UNIT = "passengers"                     # change with set_units(); defaults are the flights data
+UNIT = "passengers"
 VALUE_LABEL = "Passengers (thousands)"
 
-IEEE_COLUMN = 3.5                       # inches, one column of an IEEE two-column paper
-IEEE_PAGE = 7.16                        # inches, full text width (figure* spanning both columns)
+IEEE_COLUMN = 3.5
+IEEE_PAGE = 7.16
 
 plt.rcParams.update({
     "axes.spines.top": False, "axes.spines.right": False,
@@ -75,7 +75,7 @@ def ieee_style():
         "lines.linewidth": 1.2, "lines.markersize": 4, "axes.linewidth": 0.6,
         "grid.linewidth": 0.5, "xtick.major.width": 0.6, "ytick.major.width": 0.6,
         "xtick.major.size": 2.5, "ytick.major.size": 2.5,
-        "pdf.fonttype": 42, "ps.fonttype": 42,          # editable, embedded TrueType fonts
+        "pdf.fonttype": 42, "ps.fonttype": 42,
         "savefig.bbox": "tight", "savefig.pad_inches": 0.02, "savefig.dpi": 300,
     })
 
